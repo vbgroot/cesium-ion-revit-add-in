@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command cesium-ion-revit</Text>
+    <Description>Some description for cesium-ion-revit</Description>
+    <Assembly>cesium-ion-revit.dll</Assembly>
+    <FullClassName>Cesium.Ion.Revit.Command</FullClassName>
+    <ClientId>6cb8e9e0-bda2-4e7c-90da-1ad8f66c7275</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application cesium-ion-revit</Name>
+    <Assembly>cesium-ion-revit.dll</Assembly>
+    <FullClassName>Cesium.Ion.Revit.App</FullClassName>
+    <ClientId>acfdb6c9-ed50-400f-afe3-28c85f6e206f</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>

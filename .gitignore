@@ -1,0 +1,11 @@
+bin
+obj
+/packages/
+/.vs/
+_ReSharper.*
+*.nupkg
+*.suo
+*.DotSettings.user
+*.userprefs
+*.resources
+*.user

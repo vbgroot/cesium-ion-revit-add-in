@@ -99,6 +99,24 @@ namespace Cesium.Ion.Revit.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resources and tutorials for how to use Cesium ion in Revit.
+        /// </summary>
+        internal static string HelpButtonDescription {
+            get {
+                return ResourceManager.GetString("HelpButtonDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        internal static string HelpButtonLabel {
+            get {
+                return ResourceManager.GetString("HelpButtonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://api.cesium.com/.
         /// </summary>
         internal static string IonAPIURL {
@@ -131,6 +149,42 @@ namespace Cesium.Ion.Revit.Properties {
         internal static string IonURL {
             get {
                 return ResourceManager.GetString("IonURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authorize your Cesium ion account for Revit.
+        /// </summary>
+        internal static string LoginButtonDescription {
+            get {
+                return ResourceManager.GetString("LoginButtonDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign In.
+        /// </summary>
+        internal static string LoginButtonLabel {
+            get {
+                return ResourceManager.GetString("LoginButtonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove your Cesium ion account from Revit.
+        /// </summary>
+        internal static string LogoutButtonDescription {
+            get {
+                return ResourceManager.GetString("LogoutButtonDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign Out.
+        /// </summary>
+        internal static string LogoutButtonLabel {
+            get {
+                return ResourceManager.GetString("LogoutButtonLabel", resourceCulture);
             }
         }
         

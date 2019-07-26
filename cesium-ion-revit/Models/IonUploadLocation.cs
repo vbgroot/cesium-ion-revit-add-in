@@ -6,7 +6,7 @@
     public partial class IonUploadLocation
     {
         [JsonProperty("endpoint")]
-        public Uri Endpoint { get; set; }
+        public string Endpoint { get; set; }
 
         [JsonProperty("bucket")]
         public string Bucket { get; set; }

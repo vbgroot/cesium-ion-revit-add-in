@@ -79,13 +79,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Command.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\LogoutCommand.cs" />
+    <Compile Include="Commands\LoginCommand.cs" />
+    <Compile Include="UploadDialog.xaml.cs">
+      <DependentUpon>UploadDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commands\UploadCommand.cs" />
     <Compile Include="IonAPI\IonAuthStatus.cs" />
     <Compile Include="IonAPI\IonScope.cs" />
     <Compile Include="IonAPI\IonAuthenticator.cs" />
-    <Compile Include="IonAPI\IonBuilder.cs" />
-    <Compile Include="IonAPI\IonCreateAPI.cs" />
-    <Compile Include="IonAPI\IonUploadAPI.cs" />
+    <Compile Include="IonAPI\IonAssetAPI.cs" />
     <Compile Include="Models\IonOnComplete.cs" />
     <Compile Include="Models\IonUploadAssetMetadata.cs" />
     <Compile Include="Models\IonAssetMetadata.cs" />
@@ -132,6 +136,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UploadDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ion-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

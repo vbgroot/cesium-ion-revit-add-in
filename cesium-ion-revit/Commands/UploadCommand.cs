@@ -27,8 +27,8 @@ namespace Cesium.Ion.Revit
                 return Result.Cancelled;
             }
 
-            new UploadDialog(doc, App.IonToken)
-                .Show("Upload to Cesium ion");
+            new UploadDialog(doc, new IonAssetAPI(App.IonToken))
+                .ShowDialog();
 
             return Result.Succeeded;
         }

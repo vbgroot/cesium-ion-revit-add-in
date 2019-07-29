@@ -1,13 +1,14 @@
 ﻿using Flurl;
 using Flurl.Http;
 using System.Threading.Tasks;
-using Cesium.Ion.Revit.Properties;
 using Amazon.S3.Transfer;
 using Amazon.S3;
 using System.Net.Http;
 using System.IO;
+using System;
+using System.Threading;
 
-namespace Cesium.Ion.Revit
+namespace Cesium.Ion
 {
     public class IonAssetAPI
     {
@@ -44,17 +45,29 @@ namespace Cesium.Ion.Revit
                 .ConfigureAwait(false);
         }
 
-        public async Task<string> Upload(IonUpload Model, string TargetModel, string ViewerURL = null)
+        public async Task<string> Upload(IonUpload Model, string TargetModel, EventHandler<UploadProgressArgs> Handler = null, CancellationToken CancelToken = default(CancellationToken), string ViewerURL = null)
         {
             ViewerURL = ViewerURL ?? Resources.IonURL;
 
             var config = Model.UploadLocation;
             var s3Config = new AmazonS3Config() { ServiceURL = config.Endpoint };
 
-            using (var s3Client = new AmazonS3Client(config.AccessKey, config.SecretAccessKey, config.SessionToken, s3Config)) { 
+            using (var s3Client = new AmazonS3Client(config.AccessKey, config.SecretAccessKey, config.SessionToken, s3Config))
+            {
                 var transfer = new TransferUtility(s3Client);
+                var uploadRequest = new TransferUtilityUploadRequest
+                {
+                    BucketName = config.Bucket,
+                    FilePath = TargetModel,
+                    Key = Path.Combine(config.Prefix, "autodesk.fbx")
+                };
 
-                await transfer.UploadAsync(TargetModel, config.Bucket, Path.Combine(config.Prefix, "revit.fbx"))
+                if (Handler != null)
+                {
+                    uploadRequest.UploadProgressEvent += Handler;
+                }
+
+                await transfer.UploadAsync(uploadRequest, CancelToken)
                     .ConfigureAwait(false);
             }
 

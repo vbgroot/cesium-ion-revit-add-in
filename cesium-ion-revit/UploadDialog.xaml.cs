@@ -3,47 +3,24 @@ using Autodesk.Revit.UI;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Cesium.Ion.Revit
 {
-
-    public partial class UploadDialog : UserControl
+    public partial class UploadDialog : Window
     {
-        public string IonToken { get; set; }
-        public string OutputPath { get; }
-        public Window Window { get; private set; }
+        public readonly IonAssetAPI Ion;
+        private readonly Document Document;
 
-        public Document Document { get; set; }
-
-        public UploadDialog(Document Document, string IonToken)
+        public UploadDialog(Document Document, IonAssetAPI Ion)
         {
             InitializeComponent();
             this.Document = Document;
-            this.IonToken = IonToken;
+            this.Ion = Ion;
         }
 
-        public Window Show(string Title)
+        public string ExportFBX(string FileName = "out")
         {
-            Window = Window ?? new Window
-            {
-                Title = Title,
-                Content = this,
-                ResizeMode = ResizeMode.NoResize,
-                SizeToContent = SizeToContent.WidthAndHeight
-            };
-            Window.ShowDialog();
-
-            return Window;
-        }
-
-        public void Close() {
-            Window.Close();
-            Window = null;
-        }
-
-        public string ExportFBX( View3D view, string FileName = "out")
-        {
+            View3D view = (View3D) Document.ActiveView;
             var folder = Utils.GetTemporaryDirectory();
             var viewSet = new ViewSet();
             viewSet.Insert(view);
@@ -63,19 +40,16 @@ namespace Cesium.Ion.Revit
             }
             return null;
         }
-
-
         private void OnUploadClick(object sender, RoutedEventArgs e)
         {
             if (NameInput.Text.Length == 0)
             {
                 TaskDialog.Show("Missing Fields!", "Please set \"Name\" field to start upload!");
-                Window.Focus();
+                Focus();
                 return;
             }
 
-            var fbxPath = ExportFBX((View3D) Document.ActiveView);
-            Debug.WriteLine(fbxPath);
+            var fbxPath = ExportFBX();
 
             if (fbxPath == null)
             {
@@ -84,17 +58,17 @@ namespace Cesium.Ion.Revit
                 return;
             }
 
-            var ionAPI = new IonAssetAPI(IonToken);
-            var ionAsset = ionAPI.Create(
+            var ionAsset = Ion.Create(
                 NameInput.Text,
                 DescriptionInput.Text,
                 AttributionInput.Text,
                 UseWebPCheckbox.IsChecked ?? false
             ).Result;
-            var assetURL = ionAPI.Upload(ionAsset, fbxPath).Result;
 
             Close();
-            assetURL.OpenBrowser();
+
+            new ProgressDialog(Ion, ionAsset, fbxPath)
+                 .Show();
         }
 
         private void OnCancelClick(object sender, RoutedEventArgs e)

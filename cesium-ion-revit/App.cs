@@ -1,22 +1,23 @@
 #region Namespaces
 using System;
 using System.Windows;
-using System.Reflection;
 using Autodesk.Revit.UI;
 using System.Drawing;
 using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using Cesium.Ion;
 using Cesium.Ion.Revit.Properties;
 using System.Windows.Media;
+using System.Reflection;
 #endregion
 
 namespace Cesium.Ion.Revit
 {
 
-    class App : IExternalApplication
+    public class App : IExternalApplication
     {
-        public readonly static IonAuthServer Server = new IonAuthServer();
+        public static IonAuthServer Server { get; private set; } = null;
 
         private static PushButton UploadButton = null;
         private static PushButton LogoutButton = null;
@@ -24,7 +25,7 @@ namespace Cesium.Ion.Revit
 
         public static string IonToken
         {
-            get => Settings.Default.IonToken;
+            get => Settings.Default.IonToken ?? "";
             set
             {
                 value = value ?? "";
@@ -60,6 +61,7 @@ namespace Cesium.Ion.Revit
 
         public Result OnStartup(UIControlledApplication application)
         {
+            Server = new IonAuthServer();
             Assembly assembly = Assembly.GetExecutingAssembly();
             string path = assembly.Location;
             string namespacePrefix = typeof(App).Namespace + ".";
@@ -69,10 +71,10 @@ namespace Cesium.Ion.Revit
 
             // Add cesium button
             PushButtonData cesiumButton = new PushButtonData(
-               Resources.UploadButtonLabel,
-               Resources.UploadButtonLabel,
-               path,
-               namespacePrefix + nameof(UploadCommand)
+                Resources.UploadButtonLabel,
+                Resources.UploadButtonLabel,
+                path,
+                namespacePrefix + nameof(UploadCommand)
             )
             {
                 ToolTip = Resources.UploadButtonDescription,
@@ -127,6 +129,7 @@ namespace Cesium.Ion.Revit
         {
             Settings.Default.Save();
             Server.Dispose();
+            Server = null;
             UploadButton = null;
             LogoutButton = null;
             LoginButton = null;

@@ -1,5 +1,4 @@
-﻿
-namespace Cesium.Ion.Revit
+﻿namespace Cesium.Ion
 {
     public static class IonScopeRepresentation
     {

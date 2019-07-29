@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>46df1717-bd2b-4eaa-aee8-9d3e23627b86</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Cesium.Ion</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)IonAssetAPI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IonAuthenticator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IonAuthServer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IonAuthStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IonScope.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\IonAssetMetadata.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\IonOnComplete.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\IonUpload.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\IonUploadAssetMetadata.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\IonUploadLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources.resx">
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

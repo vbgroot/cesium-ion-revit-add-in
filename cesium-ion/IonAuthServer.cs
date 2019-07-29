@@ -1,26 +1,20 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Cesium.Ion.Revit.Properties;
 using Flurl;
 using Unosquare.Labs.EmbedIO;
 
-namespace Cesium.Ion.Revit
+namespace Cesium.Ion
 {
+    public delegate string ResponseHandler(IonAuthStatus Status, string Code, string State);
+
     public delegate void CodeHandler(IonAuthStatus Status, string Code, string State);
 
     public class IonAuthServer : IDisposable
     {
-
         private WebServer Server = null;
-        private CodeHandler CodeHandler = null;
-
-        public void OnCodeListener(CodeHandler CodeHandler)
-        {
-            this.CodeHandler = CodeHandler;
-        }
+        public CodeHandler OnCodeListener { private get; set; } = null;
+        public ResponseHandler OnResponseListener { private get; set; } = null;
 
         public void Listen(int port)
         {
@@ -34,26 +28,23 @@ namespace Cesium.Ion.Revit
             Server.RunAsync();
         }
 
-        public async Task<bool> HandleLoad(IHttpContext context, CancellationToken ct) {
+        public async Task<bool> HandleLoad(IHttpContext context, CancellationToken ct)
+        {
             var url = context.Request.Url;
             var param = Url.ParseQueryParams(url.Query);
             var authStatus = IonAuthStatus.ERROR;
 
-            string html;
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourcePath = $"{GetType().Namespace}.Resources.index.html";
-            using (var stream = assembly.GetManifestResourceStream(resourcePath))
-            {
-                html = new StreamReader(stream).ReadToEnd();
-            }
-
+            var state = param["state"] as string;
             var authCode = param["code"] as string;
             authStatus = authCode != null ? IonAuthStatus.CODE : IonAuthStatus.DENIED;
-            var authMessage = authStatus == IonAuthStatus.CODE ? Resources.AuthSucceedHTML : Resources.AuthDeniedHTML;
-            await context.HtmlResponseAsync(html.Replace("%RES%", authMessage));
-            try {
-                CodeHandler?.Invoke(authStatus, authCode, param["state"] as string);
-            } catch (Exception exception)
+
+            var html = OnResponseListener?.Invoke(authStatus, authCode, state) ?? "DONE";
+            await context.HtmlResponseAsync(html);
+            try
+            {
+                OnCodeListener?.Invoke(authStatus, authCode, state);
+            }
+            catch (Exception exception)
             {
                 Console.WriteLine(exception);
             }

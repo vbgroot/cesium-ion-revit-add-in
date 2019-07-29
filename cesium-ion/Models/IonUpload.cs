@@ -1,4 +1,4 @@
-﻿namespace Cesium.Ion.Revit
+﻿namespace Cesium.Ion
 {
     using Newtonsoft.Json;
 

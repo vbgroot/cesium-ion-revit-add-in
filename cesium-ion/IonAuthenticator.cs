@@ -2,17 +2,15 @@
 using System.Linq;
 using Flurl;
 using Flurl.Http;
-using Cesium.Ion.Revit.Properties;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Cesium.Ion.Revit
+namespace Cesium.Ion
 {
     public delegate void AuthHandler(IonAuthStatus Status, string Token);
 
     public class IonAuthenticator
     {
-
         public readonly static string CodeChallengeMethod = "S256";
 
         public string IonURL { get; set; }
@@ -24,11 +22,11 @@ namespace Cesium.Ion.Revit
         public int RedirectPort { get; set; }
 
 
-        public IonAuthenticator(string IonURL = null, string IonAPIURL = null, string ClientID = null, string CodeVerifier = null, string State = null, IonScope[] scope = null, int RedirectPort = -1)
+        public IonAuthenticator(string ClientID, string IonURL = null, string IonAPIURL = null, string CodeVerifier = null, string State = null, IonScope[] scope = null, int RedirectPort = -1)
         {
+            this.ClientID = ClientID;
             this.IonURL = IonURL ?? Resources.IonURL;
             this.IonAPIURL = IonAPIURL ?? Resources.IonAPIURL;
-            this.ClientID = ClientID ?? Resources.IonClientID;
             this.CodeVerifier = CodeVerifier ?? Utils.RandomString(32);
             this.State = State ?? Utils.RandomString(32);
             this.IonScopes = scope ?? new IonScope[] { IonScope.WRITE };
@@ -86,8 +84,6 @@ namespace Cesium.Ion.Revit
                 code_verifier = CodeVerifier
             };
 
-            Console.WriteLine(JsonConvert.SerializeObject(body));
-
             var response = await IonAPIURL
                 .AppendPathSegments("oauth", "token")
                 .WithHeader("Accept", "application/json")
@@ -95,13 +91,6 @@ namespace Cesium.Ion.Revit
                 .ReceiveJson<TokenResponse>();
 
             return response.AccessToken;
-        }
-
-        public string OpenBrowser()
-        {
-            var authURL = GetOAuthURL();
-            authURL.OpenBrowser();
-            return authURL;
         }
 
         public CodeHandler AsHandler(AuthHandler Handler)
@@ -137,15 +126,10 @@ namespace Cesium.Ion.Revit
                 Handler(IonAuthStatus.CODE, token);
             };
         }
-
-        public void OnAuthListener(IonAuthServer Server, AuthHandler Handler)
-        {
-            Server.OnCodeListener(AsHandler(Handler));
-        }
-       
     }
 
-    public partial class TokenResponse {
+    public partial class TokenResponse
+    {
         [JsonProperty("access_token")]
         public string AccessToken;
     }

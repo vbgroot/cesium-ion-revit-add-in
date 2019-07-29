@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Cesium.Ion.Revit
+namespace Cesium.Ion
 {
     public partial class IonUploadAssetMetadata : IonAssetMetadata
     {

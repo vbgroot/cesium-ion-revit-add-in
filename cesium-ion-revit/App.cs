@@ -61,7 +61,7 @@ namespace Cesium.Ion.Revit
 
         public Result OnStartup(UIControlledApplication application)
         {
-            Server = new IonAuthServer();
+            Server = new RevitAuthServer();
             Assembly assembly = Assembly.GetExecutingAssembly();
             string path = assembly.Location;
             string namespacePrefix = typeof(App).Namespace + ".";

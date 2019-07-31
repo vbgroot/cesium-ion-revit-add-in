@@ -1,41 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
-  <AddIn Type="Command">
-    <Text>Command cesium-ion-revit</Text>
-    <Description>Some description for cesium-ion-revit</Description>
-    <Assembly>Cesium.Ion.Revit.dll</Assembly>
-    <FullClassName>Cesium.Ion.Revit.UploadCommand</FullClassName>
-    <ClientId>6cb8e9e0-bda2-4e7c-90da-1ad8f66c7275</ClientId>
-    <VendorId>com.cesium.ion</VendorId>
-    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
-  </AddIn>
-  <AddIn Type="Command">
-    <Text>Command cesium-ion-revit</Text>
-    <Description>Some description for cesium-ion-revit</Description>
-    <Assembly>Cesium.Ion.Revit.dll</Assembly>
-    <FullClassName>Cesium.Ion.Revit.LogoutCommand</FullClassName>
-    <ClientId>0b936d71-094d-4750-98cc-34190f2eb7b9</ClientId>
-    <VendorId>com.cesium.ion</VendorId>
-    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
-  </AddIn>
-  <AddIn Type="Command">
-    <Text>Command cesium-ion-revit</Text>
-    <Description>Some description for cesium-ion-revit</Description>
-    <Assembly>Cesium.Ion.Revit.dll</Assembly>
-    <FullClassName>Cesium.Ion.Revit.LoginCommand</FullClassName>
-    <ClientId>4b1132d8-0780-466e-85a1-ef06aebb2294</ClientId>
-    <VendorId>com.cesium.ion</VendorId>
-    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
-  </AddIn>
-  <AddIn Type="Command">
-    <Text>Command cesium-ion-revit</Text>
-    <Description>Some description for cesium-ion-revit</Description>
-    <Assembly>Cesium.Ion.Revit.dll</Assembly>
-    <FullClassName>Cesium.Ion.Revit.HelpCommand</FullClassName>
-    <ClientId>cc0de0bd-0475-4ce4-b66a-440b79a5677c</ClientId>
-    <VendorId>com.cesium.ion</VendorId>
-    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
-  </AddIn>
   <AddIn Type="Application">
     <Name>Application cesium-ion-revit</Name>
     <Assembly>Cesium.Ion.Revit.dll</Assembly>

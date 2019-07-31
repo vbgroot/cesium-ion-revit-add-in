@@ -130,6 +130,12 @@
   <data name="Cesium32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\cesium-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ErrorViewportDescription" xml:space="preserve">
+    <value>You must be in 3D view to export.</value>
+  </data>
+  <data name="ErrorViewportTitle" xml:space="preserve">
+    <value>Export Failed!</value>
+  </data>
   <data name="HelpButtonDescription" xml:space="preserve">
     <value>Resources and tutorials for how to use Cesium ion in Revit</value>
   </data>

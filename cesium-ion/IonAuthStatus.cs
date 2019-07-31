@@ -1,6 +1,6 @@
 ﻿namespace Cesium.Ion
 {
-    public enum IonAuthStatus
+    public enum IonStatus
     {
         CODE,
         ERROR,

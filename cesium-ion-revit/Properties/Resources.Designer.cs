@@ -99,6 +99,24 @@ namespace Cesium.Ion.Revit.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must be in 3D view to export..
+        /// </summary>
+        internal static string ErrorViewportDescription {
+            get {
+                return ResourceManager.GetString("ErrorViewportDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Failed!.
+        /// </summary>
+        internal static string ErrorViewportTitle {
+            get {
+                return ResourceManager.GetString("ErrorViewportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resources and tutorials for how to use Cesium ion in Revit.
         /// </summary>
         internal static string HelpButtonDescription {

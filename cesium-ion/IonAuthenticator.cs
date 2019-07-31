@@ -7,7 +7,17 @@ using Newtonsoft.Json;
 
 namespace Cesium.Ion
 {
-    public delegate void AuthHandler(IonAuthStatus Status, string Token);
+    public struct IonAuthArgs
+    {
+        public readonly IonStatus Status;
+        public readonly string Token;
+
+        public IonAuthArgs(IonStatus status, string token)
+        {
+            Status = status;
+            Token = token;
+        }
+    }
 
     public class IonAuthenticator
     {
@@ -93,20 +103,20 @@ namespace Cesium.Ion
             return response.AccessToken;
         }
 
-        public CodeHandler AsHandler(AuthHandler Handler)
+        public EventHandler<IonCodeArgs> AsHandler(EventHandler<IonAuthArgs> Handler)
         {
-            return (IonAuthStatus Status, string Code, string State) =>
+            return (object Sender, IonCodeArgs Args) =>
             {
-                if (Status != IonAuthStatus.CODE)
+                if (Args.Status != IonStatus.CODE)
                 {
-                    Handler(Status, null);
+                    Handler.Invoke(this, new IonAuthArgs(IonStatus.ERROR, null));
                     Console.Write("No code sent!");
                     return;
                 }
 
                 if (!IsTrusted(State))
                 {
-                    Handler(IonAuthStatus.ERROR, null);
+                    Handler.Invoke(this, new IonAuthArgs(IonStatus.ERROR, null));
                     Console.Write("Cannot trust source! Force exiting");
                     return;
                 }
@@ -114,16 +124,16 @@ namespace Cesium.Ion
                 string token;
                 try
                 {
-                    token = GetToken(Code).Result;
+                    token = GetToken(Args.Code).Result;
                 }
                 catch (Exception exception)
                 {
-                    Handler(IonAuthStatus.DENIED, null);
+                    Handler.Invoke(this, new IonAuthArgs(IonStatus.DENIED, null));
                     Console.WriteLine(exception);
                     return;
                 }
 
-                Handler(IonAuthStatus.CODE, token);
+                Handler.Invoke(this, new IonAuthArgs(IonStatus.CODE, token));
             };
         }
     }

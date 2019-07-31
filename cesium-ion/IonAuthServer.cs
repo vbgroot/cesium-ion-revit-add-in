@@ -6,14 +6,25 @@ using Unosquare.Labs.EmbedIO;
 
 namespace Cesium.Ion
 {
-    public delegate string ResponseHandler(IonAuthStatus Status, string Code, string State);
+    public delegate string ResponseHandler();
+    public struct IonCodeArgs
+    {
+        public readonly IonStatus Status;
+        public readonly string Code;
+        public readonly string State;
 
-    public delegate void CodeHandler(IonAuthStatus Status, string Code, string State);
+        public IonCodeArgs(IonStatus status, string code, string state)
+        {
+            Status = status;
+            Code = code;
+            State = state;
+        }
+    }
 
     public class IonAuthServer : IDisposable
     {
         private WebServer Server = null;
-        public CodeHandler OnCodeListener { private get; set; } = null;
+        public event EventHandler<IonCodeArgs> OnCodeListener;
         public ResponseHandler OnResponseListener { private get; set; } = null;
 
         public void Listen(int port)
@@ -28,21 +39,26 @@ namespace Cesium.Ion
             Server.RunAsync();
         }
 
+        protected virtual string GetResponse(IonStatus Status, string Code, string State)
+        {
+            return "DONE";
+        }
+
         public async Task<bool> HandleLoad(IHttpContext context, CancellationToken ct)
         {
             var url = context.Request.Url;
             var param = Url.ParseQueryParams(url.Query);
-            var authStatus = IonAuthStatus.ERROR;
+            var authStatus = IonStatus.ERROR;
 
             var state = param["state"] as string;
             var authCode = param["code"] as string;
-            authStatus = authCode != null ? IonAuthStatus.CODE : IonAuthStatus.DENIED;
+            authStatus = authCode != null ? IonStatus.CODE : IonStatus.DENIED;
 
-            var html = OnResponseListener?.Invoke(authStatus, authCode, state) ?? "DONE";
-            await context.HtmlResponseAsync(html);
+            await context.HtmlResponseAsync(GetResponse(authStatus, authCode, state));
+
             try
             {
-                OnCodeListener?.Invoke(authStatus, authCode, state);
+                OnCodeListener(this, new IonCodeArgs(authStatus, authCode, state));
             }
             catch (Exception exception)
             {

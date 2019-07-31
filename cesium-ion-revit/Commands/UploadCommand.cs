@@ -3,6 +3,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Cesium.Ion.Revit.Properties;
 #endregion
 
 namespace Cesium.Ion.Revit
@@ -23,7 +24,7 @@ namespace Cesium.Ion.Revit
 
             if (doc.ActiveView as View3D == null)
             {
-                TaskDialog.Show("Export Failed!", "You must be in 3D view to export.");
+                TaskDialog.Show(Resources.ErrorViewportTitle, Resources.ErrorViewportDescription);
                 return Result.Cancelled;
             }
 

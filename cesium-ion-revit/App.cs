@@ -17,7 +17,7 @@ namespace Cesium.Ion.Revit
 
     public class App : IExternalApplication
     {
-        public static IonAuthServer Server { get; private set; } = null;
+        public static RevitAuthServer Server { get; private set; } = null;
 
         private static PushButton UploadButton = null;
         private static PushButton LogoutButton = null;

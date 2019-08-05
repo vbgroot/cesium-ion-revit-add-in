@@ -3,6 +3,8 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Cesium.Ion.Revit.Properties;
+using System.IO;
+using System.Reflection;
 #endregion
 
 namespace Cesium.Ion.Revit
@@ -17,13 +19,24 @@ namespace Cesium.Ion.Revit
         {
             var server = App.Server;
             var auth = new IonAuthenticator(Resources.IonClientID);
-            server.Listen(auth.RedirectPort);
+            server.Listen(auth);
 
-            server.OnCodeListener += auth.AsHandler((Sender, Args) =>
+            server.OnAuthListener += (Sender, Args) =>
             {
-                App.IonToken = Args.Token;
                 server.Dispose();
-            });
+                App.IonToken = Args.Token;
+
+                var assembly = Assembly.GetExecutingAssembly();
+                var resourcePath = $"{GetType().Namespace}.Resources.index.html";
+                var authMessage = Args.Status == IonStatus.SUCCESS ? Resources.AuthSucceedHTML : Resources.AuthDeniedHTML;
+                using (var stream = assembly.GetManifestResourceStream(resourcePath))
+                {
+                    Args.ClearResponse();
+                    Args.WriteResponse(new StreamReader(stream)
+                        .ReadToEnd()
+                        .Replace("%RES%", authMessage));
+                }
+            };
 
             auth.GetOAuthURL()
                 .OpenBrowser();

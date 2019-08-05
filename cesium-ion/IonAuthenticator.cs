@@ -4,21 +4,10 @@ using Flurl;
 using Flurl.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace Cesium.Ion
 {
-    public struct IonAuthArgs
-    {
-        public readonly IonStatus Status;
-        public readonly string Token;
-
-        public IonAuthArgs(IonStatus status, string token)
-        {
-            Status = status;
-            Token = token;
-        }
-    }
-
     public class IonAuthenticator
     {
         public readonly static string CodeChallengeMethod = "S256";
@@ -31,6 +20,8 @@ namespace Cesium.Ion
         public IonScope[] IonScopes { get; set; }
         public int RedirectPort { get; set; }
 
+
+        public IonAuthenticator(string ClientID) : this(ClientID, null) { }
 
         public IonAuthenticator(string ClientID, string IonURL = null, string IonAPIURL = null, string CodeVerifier = null, string State = null, IonScope[] scope = null, int RedirectPort = -1)
         {
@@ -85,6 +76,8 @@ namespace Cesium.Ion
 
         public async Task<string> GetToken(String code)
         {
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
             var body = new
             {
                 grant_type = "authorization_code",
@@ -94,47 +87,24 @@ namespace Cesium.Ion
                 code_verifier = CodeVerifier
             };
 
-            var response = await IonAPIURL
-                .AppendPathSegments("oauth", "token")
-                .WithHeader("Accept", "application/json")
-                .PostJsonAsync(body)
-                .ReceiveJson<TokenResponse>();
+            try { 
+            var x = @"https://asdadsasd.free.beeceptor.com"
+                .AppendPathSegments("oauth", "token");
 
-            return response.AccessToken;
-        }
+            var y = x
+                 .WithHeader("Accept", "application/json");
 
-        public EventHandler<IonCodeArgs> AsHandler(EventHandler<IonAuthArgs> Handler)
-        {
-            return (object Sender, IonCodeArgs Args) =>
+            var z = y
+                .PostJsonAsync(body);
+
+            var w = z.ReceiveJson().Result;
+            }
+            catch (Exception e)
             {
-                if (Args.Status != IonStatus.CODE)
-                {
-                    Handler.Invoke(this, new IonAuthArgs(IonStatus.ERROR, null));
-                    Console.Write("No code sent!");
-                    return;
-                }
+                Console.WriteLine(e);
+            }
 
-                if (!IsTrusted(State))
-                {
-                    Handler.Invoke(this, new IonAuthArgs(IonStatus.ERROR, null));
-                    Console.Write("Cannot trust source! Force exiting");
-                    return;
-                }
-
-                string token;
-                try
-                {
-                    token = GetToken(Args.Code).Result;
-                }
-                catch (Exception exception)
-                {
-                    Handler.Invoke(this, new IonAuthArgs(IonStatus.DENIED, null));
-                    Console.WriteLine(exception);
-                    return;
-                }
-
-                Handler.Invoke(this, new IonAuthArgs(IonStatus.CODE, token));
-            };
+            return null;
         }
     }
 

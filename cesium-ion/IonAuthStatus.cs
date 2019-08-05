@@ -2,8 +2,9 @@
 {
     public enum IonStatus
     {
-        CODE,
+        SUCCESS,
         ERROR,
-        DENIED
+        DENIED,
+        UNTRUSTED
     }
 }

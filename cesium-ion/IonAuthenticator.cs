@@ -88,7 +88,7 @@ namespace Cesium.Ion
             };
 
             try { 
-            var x = @"https://asdadsasd.free.beeceptor.com"
+            var x = IonAPIURL
                 .AppendPathSegments("oauth", "token");
 
             var y = x

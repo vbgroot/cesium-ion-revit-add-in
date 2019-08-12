@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cesium.Ion.Revit", "cesium-ion-revit\Cesium.Ion.Revit.csproj", "{7382A564-A5AF-4B96-A668-7A11BDAC5EA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DCB780BA-F008-445D-9D23-D81E6F1033C8}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CHANGES.md = CHANGES.md
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE = LICENSE
+		README.md = README.md
+		Documentation\DeveloperGuide\README.md = Documentation\DeveloperGuide\README.md
+		ThirdParty.json = ThirdParty.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cesium.Ion", "cesium-ion\Cesium.Ion.csproj", "{03F43AD2-F3A7-4D21-A8B6-D9628393A7FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7382A564-A5AF-4B96-A668-7A11BDAC5EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7382A564-A5AF-4B96-A668-7A11BDAC5EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7382A564-A5AF-4B96-A668-7A11BDAC5EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7382A564-A5AF-4B96-A668-7A11BDAC5EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03F43AD2-F3A7-4D21-A8B6-D9628393A7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03F43AD2-F3A7-4D21-A8B6-D9628393A7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03F43AD2-F3A7-4D21-A8B6-D9628393A7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03F43AD2-F3A7-4D21-A8B6-D9628393A7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C14EFBB5-FECF-4E95-A2FC-9AF1EE0A7D86}
+	EndGlobalSection
+EndGlobal

@@ -53,8 +53,6 @@ namespace Cesium.Ion
                 .Aggregate("", (accum, scope) => scope + "," + accum)
                 .TrimEnd(',');
 
-            Console.WriteLine(serializedScope);
-
             return IonURL
                 .AppendPathSegment("oauth")
                 .SetQueryParams(new
@@ -76,8 +74,6 @@ namespace Cesium.Ion
 
         public async Task<string> GetToken(String code)
         {
-            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-
             var body = new
             {
                 grant_type = "authorization_code",
@@ -87,24 +83,16 @@ namespace Cesium.Ion
                 code_verifier = CodeVerifier
             };
 
-            try { 
-            var x = IonAPIURL
-                .AppendPathSegments("oauth", "token");
+            using (new SecurityProtocolDisposable(SecurityProtocolType.Tls12)) { 
+                var token = await IonAPIURL
+                    .AppendPathSegments("oauth", "token")
+                    .WithHeader("Accept", "application/json")
+                    .PostJsonAsync(body)
+                    .ReceiveJson<TokenResponse>()
+                    .ConfigureAwait(false);
 
-            var y = x
-                 .WithHeader("Accept", "application/json");
-
-            var z = y
-                .PostJsonAsync(body);
-
-            var w = z.ReceiveJson().Result;
+                return token.AccessToken;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            return null;
         }
     }
 

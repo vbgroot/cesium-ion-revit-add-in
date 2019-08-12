@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage SchemaVersion="1.0" AutodeskProduct="3ds Max" Name="Cesium ion" Description="Utility to precisely align an object to another, using three source and three target points." AppVersion="1.0.0" FriendlyVersion="1.0.0" ProductType="Application" HelpFile="./Contents/Help/index.html" SupportedLocales="Enu" AppNameSpace="appstore.exchange.autodesk.com" Author="Cesium GS, Inc" ProductCode="{bdebe6a9-0cf9-429a-b532-59e629d68ee9}" UpgradeCode="{0604b934-26b2-4ce0-9761-b45e41eb1868}" OnlineDocumentation="http://cesium.com" Icon="./Contents/Help/Image.ico">
+  <CompanyDetails Name="Cesium GS, Inc" Url="http://cesium.com" Email="help@cesium.com" Phone=" " />
+  <RuntimeRequirements OS="Win32|Win64" Platform="3ds Max|3ds Max Design" SeriesMin="2015" SeriesMax="2020" />
+  <Components Description="post-start-up scripts parts">
+    <RuntimeRequirements OS="Win32|Win64" Platform="3ds Max|3ds Max Design" SeriesMin="2015" SeriesMax="2020" />
+    <ComponentEntry AppName="CesiumIon" Version="1.0.0" ModuleName="./Contents/maxscript/core.ms" AppDescription="Cesium ion" />
+  </Components>
+  <Components Description="macroscripts parts">
+    <RuntimeRequirements OS="Win32|Win64" Platform="3ds Max|3ds Max Design" SeriesMin="2015" SeriesMax="2020" />
+    <ComponentEntry AppName="CesiumIon" Version="1.0.0" ModuleName="./Contents/maxscript/macros.mcr" AppDescription="Cesium ion" />
+  </Components>
+  <Components Description="post-start-up scripts parts">
+    <RuntimeRequirements OS="Win32|Win64" Platform="3ds Max|3ds Max Design" SeriesMin="2015" SeriesMax="2020" />
+    <ComponentEntry AppName="CesiumIon" Version="1.0.0" ModuleName="./Contents/maxscript/startup.ms" AppDescription="Cesium ion" />
+  </Components>
+</ApplicationPackage>

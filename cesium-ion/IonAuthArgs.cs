@@ -1,6 +1,6 @@
 ﻿namespace Cesium.Ion
 {
-    public struct IonAuthArgs
+    public class IonAuthArgs
     {
         public readonly IonStatus Status;
         public readonly string Token;

@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.IO;
 using System;
 using System.Threading;
+using System.Net;
 
 namespace Cesium.Ion
 {
@@ -38,12 +39,17 @@ namespace Cesium.Ion
                 }
             };
 
-            return await endpoint
+            using (new SecurityProtocolDisposable(SecurityProtocolType.Tls12))
+            {
+                return await endpoint
                 .WithOAuthBearerToken(Token)
                 .PostJsonAsync(data)
                 .ReceiveJson<IonUpload>()
                 .ConfigureAwait(false);
+            }
         }
+
+        public Task<string> Upload(IonUpload Model, string TargetModel) => Upload(Model, TargetModel, null);
 
         public async Task<string> Upload(IonUpload Model, string TargetModel, EventHandler<UploadProgressArgs> Handler = null, CancellationToken CancelToken = default(CancellationToken), string ViewerURL = null)
         {
@@ -72,12 +78,16 @@ namespace Cesium.Ion
             }
 
             var completeMeta = Model.OnComplete;
-            await completeMeta.Url
+            using (new SecurityProtocolDisposable(SecurityProtocolType.Tls12))
+            {
+                await completeMeta.Url
                 .ToString()
                 .SetQueryParams((object)completeMeta.Fields)
                 .WithOAuthBearerToken(Token)
                 .SendAsync(new HttpMethod(completeMeta.Method))
+                .WithSecurityProtocol(SecurityProtocolType.Tls12)
                 .ConfigureAwait(false);
+            }
 
             return Url.Combine(ViewerURL, "assets", Model.AssetMetadata.Id.ToString());
         }

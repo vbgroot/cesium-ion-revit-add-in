@@ -63,6 +63,11 @@ namespace Cesium.Ion
 
             await context.HtmlResponseAsync(args.Response ?? "DONE");
 
+            if (args.DisposeAfter)
+            {
+                Dispose();
+            }
+
             return true;
         }
 

@@ -30,4 +30,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="DEL /Q &quot;$(SolutionDir)\CesiumIon.bundle\Contents\binary\*.*&quot; &gt; NULL&#xD;&#xA;if $(ConfigurationName) == Debug (&#xD;&#xA;    XCOPY &quot;$(TargetDir)*&quot; &quot;$(SolutionDir)\CesiumIon.bundle\Contents\binary\&quot;&#xD;&#xA;) ELSE (&#xD;&#xA;    XCOPY &quot;$(TargetDir)*.dll&quot; &quot;$(SolutionDir)\CesiumIon.bundle\Contents\binary\&quot;&#xD;&#xA;)" />
+  </Target>
+
 </Project>

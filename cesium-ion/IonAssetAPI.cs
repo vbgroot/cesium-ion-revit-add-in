@@ -16,6 +16,8 @@ namespace Cesium.Ion
         public readonly string Token;
         public readonly string IonURL;
 
+        public IonAssetAPI(string Token) : this(Token, null) { }
+
         public IonAssetAPI(string Token, string IonURL = null)
         {
             IonURL = IonURL ?? Resources.IonAPIURL;
